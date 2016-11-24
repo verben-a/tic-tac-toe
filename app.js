@@ -28,9 +28,7 @@ function checkWin(xOrCircle) {
     var oOwned = []; 
 
     if ($('.circle').length >= 3 || $('.cross').length >= 3) {
-        // var xOwned = ($('.cross').parent()).map(function(index1, element1) {
-        //         return parseInt(element1.id)
-        //     });
+        
         var crosses = $('.cross').parent();
         var circles = $('.circle').parent();
         for (var i = 0; i < crosses.length; i++) {
@@ -39,26 +37,34 @@ function checkWin(xOrCircle) {
         for (var i = 0; i < circles.length; i++) {
             oOwned.push(+circles[i].id);
         }
-        // var oOwned = ($('.circle').parent()).map(function(index2, element2) {
-        //         return parseInt(element2.id)
-        //     });
+        
         
         console.log(xOwned.length, xOwned);
         console.log(oOwned.length, oOwned);
         for (var i = 0; i < wins.length; i++) {
             if (xOwned.indexOf(wins[i][0]) > -1 && xOwned.indexOf(wins[i][1]) > -1 && xOwned.indexOf(wins[i][2]) > -1) {
                 //x won
-                // tell us who has won!
                 alert("X has won!");
+                resetGame();
                 break;
             } else if (oOwned.indexOf(wins[i][0]) > -1 && oOwned.indexOf(wins[i][1]) > -1 && oOwned.indexOf(wins[i][2]) > -1) {
                 //o won
-                alert("O has won!")
+                alert("O has won!");
+                resetGame();
                 break;
-            }
-        }
-    }
+            } else if (state.counter === 8) {
+                //draw
+                alert("Draw!");
+                resetGame();
+                break;
+            };
+        };
+    };
 }
+
+var resetGame = function() {
+    location.reload();
+};
 
 //render state
 //push required counter
@@ -87,8 +93,5 @@ $(document).ready(function() {
         } else {
             checkWin('.circle');
         };
-
-        // checkWin();
     })
-
 });
